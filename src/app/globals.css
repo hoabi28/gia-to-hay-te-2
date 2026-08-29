@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f8fa;
+  --foreground: #101828;
+
+  --color-brand-50: #eaf1fb;
+  --color-brand-100: #d3e3f6;
+  --color-brand-500: #2f6fb0;
+  --color-brand-600: #1f5690;
+  --color-brand-700: #17426f;
+  --color-brand-800: #123457;
+  --color-brand-900: #0d2740;
+
+  --color-good-50: #eafbf2;
+  --color-good-100: #d0f5e0;
+  --color-good-600: #12875a;
+  --color-good-700: #0d6b47;
+
+  --color-warn-50: #fef7ec;
+  --color-warn-600: #b3690b;
+  --color-warn-700: #8f5309;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+
+  --color-brand-50: var(--color-brand-50);
+  --color-brand-100: var(--color-brand-100);
+  --color-brand-500: var(--color-brand-500);
+  --color-brand-600: var(--color-brand-600);
+  --color-brand-700: var(--color-brand-700);
+  --color-brand-800: var(--color-brand-800);
+  --color-brand-900: var(--color-brand-900);
+
+  --color-good-50: var(--color-good-50);
+  --color-good-100: var(--color-good-100);
+  --color-good-600: var(--color-good-600);
+  --color-good-700: var(--color-good-700);
+
+  --color-warn-50: var(--color-warn-50);
+  --color-warn-600: var(--color-warn-600);
+  --color-warn-700: var(--color-warn-700);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Thanh cuộn gọn hơn cho các khối cuộn ngang (bảng thông số, so sánh) */
+.scrollbar-thin::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 9999px;
+}

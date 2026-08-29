@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "gia-tot-hay-te-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000
+    },
+    {
+      "name": "gia-tot-hay-te-static-export-test",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "out", "-l", "3002"],
+      "port": 3002
+    }
+  ]
+}

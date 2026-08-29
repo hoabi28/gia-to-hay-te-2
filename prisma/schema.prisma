@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Laptop {
+  id             String   @id
+  name           String
+  brand          String
+  series         String
+  category       String
+  useCases       String[]
+  image          String
+  releaseYear    Int
+  specs          Json
+  performance    Json
+  criteria       Json
+  warrantyMonths Int
+  pros           String[]
+  cons           String[]
+  buyIf          String[]
+  avoidIf        String[]
+  bestFor        String
+  tags           String[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  stores         StoreOffer[]
+  priceSnapshots PriceSnapshot[]
+  reviews        CommunityReview[]
+}
+
+model StoreOffer {
+  id             Int      @id @default(autoincrement())
+  laptopId       String
+  laptop         Laptop   @relation(fields: [laptopId], references: [id], onDelete: Cascade)
+  store          String
+  price          Int
+  shippingFee    Int
+  gift           String?
+  warrantyMonths Int
+  inStock        Boolean  @default(true)
+  url            String
+  updatedAt      DateTime @updatedAt
+
+  @@index([laptopId])
+}
+
+model PriceSnapshot {
+  id       Int      @id @default(autoincrement())
+  laptopId String
+  laptop   Laptop   @relation(fields: [laptopId], references: [id], onDelete: Cascade)
+  price    Int
+  date     DateTime @default(now())
+
+  @@index([laptopId, date])
+}
+
+model CommunityReview {
+  id                  String @id @default(cuid())
+  laptopId            String
+  laptop              Laptop @relation(fields: [laptopId], references: [id], onDelete: Cascade)
+  aspect              String
+  author              String
+  date                DateTime
+  rating              Int
+  content             String
+  helpfulCount        Int    @default(0)
+  usageDurationMonths Int
+
+  @@index([laptopId])
+}
