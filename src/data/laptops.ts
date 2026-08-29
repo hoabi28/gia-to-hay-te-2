@@ -1006,7 +1006,7 @@ export const laptops: Laptop[] = [
     ],
     cons: [
       "Chỉ có cổng Thunderbolt 4, phải dùng thêm hub để kết nối phụ kiện thường",
-      "Giá cao so với cấu hình so với các đối thủ Windows khác",
+      "Giá khá cao so với các đối thủ Windows cùng cấu hình",
       "Không có khe cắm SD card hay Ethernet",
     ],
     buyIf: [
