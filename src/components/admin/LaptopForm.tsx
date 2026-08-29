@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Laptop, LaptopCategory, UseCase, Brand } from "@/types/laptop";
 import { CATEGORY_LABEL, USE_CASE_LABEL } from "@/types/laptop";
+import { ProductImage } from "@/components/ui/ProductImage";
 
 const BRANDS: Brand[] = ["Asus", "Acer", "Lenovo", "Dell", "HP", "MSI", "Apple"];
 const CATEGORIES = Object.keys(CATEGORY_LABEL) as LaptopCategory[];
@@ -87,6 +88,15 @@ export function LaptopForm({
   const [idTouched, setIdTouched] = useState(false);
   const [id, setId] = useState(laptop?.id ?? "");
   const [name, setName] = useState(laptop?.name ?? "");
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [category, setCategory] = useState<LaptopCategory>(laptop?.category ?? CATEGORIES[0]);
+
+  function handleImageChange(file: File | undefined) {
+    setPreviewUrl((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return file ? URL.createObjectURL(file) : null;
+    });
+  }
 
   function addRow() {
     setRows((r) => [
@@ -152,6 +162,33 @@ export function LaptopForm({
       )}
 
       <section>
+        <h2 className="mb-3 text-sm font-bold text-slate-900">Ảnh sản phẩm</h2>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
+          <div className="h-32 w-40 shrink-0 overflow-hidden rounded-xl border border-slate-200">
+            {previewUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={previewUrl} alt="" className="h-full w-full object-cover" />
+            ) : (
+              <ProductImage category={category} imageUrl={laptop?.image} className="h-full w-full" />
+            )}
+          </div>
+          <div className="flex-1">
+            <input
+              type="file"
+              name="imageFile"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e.target.files?.[0])}
+              className="block w-full text-sm text-slate-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-brand-700 hover:file:bg-brand-100"
+            />
+            <p className="mt-1.5 text-xs text-slate-400">
+              JPG/PNG/WebP, tối đa 5MB. Bỏ trống nếu chưa có ảnh — máy sẽ dùng hình minh hoạ
+              theo nhóm sản phẩm.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section>
         <h2 className="mb-3 text-sm font-bold text-slate-900">Thông tin cơ bản</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {mode === "edit" && (
@@ -172,7 +209,12 @@ export function LaptopForm({
             <input name="series" required defaultValue={laptop?.series} className={inputClass} />
           </Field>
           <Field label="Nhóm">
-            <select name="category" defaultValue={laptop?.category ?? CATEGORIES[0]} className={inputClass}>
+            <select
+              name="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value as LaptopCategory)}
+              className={inputClass}
+            >
               {CATEGORIES.map((c) => (
                 <option key={c} value={c}>
                   {CATEGORY_LABEL[c]}

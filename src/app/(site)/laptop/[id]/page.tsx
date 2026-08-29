@@ -83,7 +83,12 @@ export default async function LaptopDetailPage({ params }: PageProps) {
 
       {/* Header */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-[280px_1fr]">
-        <ProductImage category={laptop.category} className="aspect-[4/3] w-full rounded-2xl" />
+        <ProductImage
+          category={laptop.category}
+          imageUrl={laptop.image}
+          alt={laptop.name}
+          className="aspect-[4/3] w-full rounded-2xl"
+        />
 
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-start justify-between gap-3">

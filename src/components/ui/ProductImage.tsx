@@ -12,17 +12,32 @@ const CATEGORY_STYLE: Record<
   macbook: { from: "#f1f1f2", to: "#e4e4e6", icon: "#3a3a3c" },
 };
 
+function isRealImageUrl(value: string | undefined): value is string {
+  return !!value && /^https?:\/\//.test(value);
+}
+
 /**
- * Ảnh minh hoạ dạng vector, thay thế cho ảnh sản phẩm thật.
- * Dễ dàng đổi sang <Image> trỏ tới ảnh thật khi có nguồn ảnh hợp lệ.
+ * Ảnh sản phẩm: nếu laptop có ảnh thật (upload qua /admin, lưu URL Vercel Blob) thì hiển thị
+ * ảnh đó; nếu chưa có thì dùng ảnh minh hoạ dạng vector theo nhóm sản phẩm làm placeholder.
  */
 export function ProductImage({
   category,
+  imageUrl,
+  alt = "",
   className = "",
 }: {
   category: LaptopCategory;
+  imageUrl?: string;
+  alt?: string;
   className?: string;
 }) {
+  if (isRealImageUrl(imageUrl)) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={imageUrl} alt={alt} className={`object-cover ${className}`} />
+    );
+  }
+
   const style = CATEGORY_STYLE[category];
   return (
     <div

@@ -9,6 +9,8 @@ export const metadata: Metadata = { title: "Sửa laptop" };
 
 const ERROR_MESSAGES: Record<string, string> = {
   "no-store": "Cần ít nhất 1 cửa hàng để lưu được giá — chưa lưu thay đổi.",
+  "image-too-large": "Ảnh vượt quá 5MB, vui lòng chọn ảnh nhỏ hơn — chưa lưu thay đổi.",
+  "image-invalid-type": "File chọn không phải ảnh hợp lệ — chưa lưu thay đổi.",
 };
 
 export default async function AdminEditLaptopPage({

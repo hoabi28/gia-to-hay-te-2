@@ -23,7 +23,12 @@ export function ProductCard({ laptop }: { laptop: Laptop }) {
   return (
     <div className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-shadow hover:shadow-md">
       <Link href={`/laptop/${laptop.id}`} className="block">
-        <ProductImage category={laptop.category} className="aspect-[4/3] w-full" />
+        <ProductImage
+          category={laptop.category}
+          imageUrl={laptop.image}
+          alt={laptop.name}
+          className="aspect-[4/3] w-full"
+        />
       </Link>
 
       <div className="flex flex-1 flex-col gap-2.5 p-4">

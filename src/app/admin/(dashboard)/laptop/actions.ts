@@ -2,7 +2,42 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
+import { put, del } from "@vercel/blob";
 import { db } from "@/lib/db";
+
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5MB
+
+type ImageResolution = { url: string } | { error: string };
+
+/** Nếu form có kèm file ảnh mới thì upload lên Vercel Blob và trả về URL mới, xoá ảnh cũ
+ * (nếu là ảnh thật, không phải placeholder) để tránh rác. Không có file mới thì giữ nguyên. */
+async function resolveImageUrl(
+  formData: FormData,
+  laptopId: string,
+  existingImage: string
+): Promise<ImageResolution> {
+  const file = formData.get("imageFile");
+  if (!(file instanceof File) || file.size === 0) {
+    return { url: existingImage };
+  }
+  if (file.size > MAX_IMAGE_BYTES) {
+    return { error: "image-too-large" };
+  }
+  if (!file.type.startsWith("image/")) {
+    return { error: "image-invalid-type" };
+  }
+
+  const ext = file.name.split(".").pop() || "jpg";
+  const blob = await put(`laptops/${laptopId}-${Date.now()}.${ext}`, file, {
+    access: "public",
+  });
+
+  if (/^https?:\/\//.test(existingImage)) {
+    await del(existingImage).catch(() => {});
+  }
+
+  return { url: blob.url };
+}
 
 function str(formData: FormData, name: string): string {
   return String(formData.get(name) ?? "").trim();
@@ -83,7 +118,6 @@ function buildLaptopData(formData: FormData) {
     series: str(formData, "series"),
     category: str(formData, "category"),
     useCases: formData.getAll("useCases").map(String),
-    image: str(formData, "category") + "-placeholder",
     releaseYear: num(formData, "releaseYear"),
     specs: {
       cpu: str(formData, "cpu"),
@@ -171,7 +205,13 @@ export async function updateLaptopAction(id: string, formData: FormData) {
     redirect(`/admin/laptop/${id}?error=no-store`);
   }
 
-  await db.laptop.update({ where: { id }, data });
+  const current = await db.laptop.findUniqueOrThrow({ where: { id } });
+  const imageResult = await resolveImageUrl(formData, id, current.image);
+  if ("error" in imageResult) {
+    redirect(`/admin/laptop/${id}?error=${imageResult.error}`);
+  }
+
+  await db.laptop.update({ where: { id }, data: { ...data, image: imageResult.url } });
   await saveStoresAndSnapshot(id, stores);
 
   revalidatePublicPages(id);
@@ -198,7 +238,12 @@ export async function createLaptopAction(formData: FormData) {
     redirect("/admin/laptop/new?error=no-store");
   }
 
-  await db.laptop.create({ data: { id, ...data } });
+  const imageResult = await resolveImageUrl(formData, id, `${data.category}-placeholder`);
+  if ("error" in imageResult) {
+    redirect(`/admin/laptop/new?error=${imageResult.error}`);
+  }
+
+  await db.laptop.create({ data: { id, ...data, image: imageResult.url } });
   await saveStoresAndSnapshot(id, stores);
 
   revalidatePublicPages(id);
@@ -207,7 +252,10 @@ export async function createLaptopAction(formData: FormData) {
 }
 
 export async function deleteLaptopAction(id: string) {
-  await db.laptop.delete({ where: { id } });
+  const laptop = await db.laptop.delete({ where: { id } });
+  if (/^https?:\/\//.test(laptop.image)) {
+    await del(laptop.image).catch(() => {});
+  }
   revalidatePublicPages(id);
   revalidatePath("/admin");
   redirect("/admin");

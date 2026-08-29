@@ -8,6 +8,8 @@ const ERROR_MESSAGES: Record<string, string> = {
   "missing-name": "Vui lòng nhập tên máy.",
   "duplicate-id": "Slug/ID này đã được dùng cho laptop khác, hãy đổi tên khác.",
   "no-store": "Cần ít nhất 1 cửa hàng để lưu được giá.",
+  "image-too-large": "Ảnh vượt quá 5MB, vui lòng chọn ảnh nhỏ hơn.",
+  "image-invalid-type": "File chọn không phải ảnh hợp lệ.",
 };
 
 export default async function AdminNewLaptopPage({
