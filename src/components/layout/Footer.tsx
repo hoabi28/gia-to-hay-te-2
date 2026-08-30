@@ -14,7 +14,10 @@ export function Footer() {
             </div>
             <p className="mt-2 max-w-md text-xs leading-relaxed text-slate-500">
               Công cụ hỗ trợ so sánh và chọn laptop theo nhu cầu, ngân sách thực tế.
-              Toàn bộ giá và thông số trong bản demo này là dữ liệu minh hoạ.
+              Giá và cửa hàng được cập nhật thủ công định kỳ từ các nhà bán lẻ tại Việt
+              Nam, có thể chênh lệch so với giá thực tế tại thời điểm bạn xem — vui lòng
+              kiểm tra lại tại trang bán trước khi quyết định mua. Điểm đáng tiền và các
+              chỉ số hiệu năng là đánh giá tổng hợp mang tính tham khảo.
             </p>
           </div>
           <nav className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate-500">
@@ -30,8 +33,9 @@ export function Footer() {
           </nav>
         </div>
         <p className="mt-6 border-t border-slate-100 pt-4 text-[11px] text-slate-400">
-          © {new Date().getFullYear()} {SITE_NAME}. Đây là dự án demo, không phải nền tảng
-          thương mại điện tử. Không hỗ trợ đặt hàng hay thanh toán trực tuyến.
+          © {new Date().getFullYear()} {SITE_NAME}. Đây là công cụ so sánh giá độc lập,
+          không bán hàng trực tiếp và không hỗ trợ đặt hàng hay thanh toán trên trang —
+          mọi giao dịch mua thực hiện tại website của cửa hàng liên kết.
         </p>
       </div>
     </footer>
