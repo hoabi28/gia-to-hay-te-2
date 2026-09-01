@@ -13,11 +13,10 @@ export function Footer() {
               <span className="text-sm font-bold text-slate-900">{SITE_NAME}</span>
             </div>
             <p className="mt-2 max-w-md text-xs leading-relaxed text-slate-500">
-              Công cụ hỗ trợ so sánh và chọn laptop theo nhu cầu, ngân sách thực tế.
-              Giá và cửa hàng được cập nhật thủ công định kỳ từ các nhà bán lẻ tại Việt
-              Nam, có thể chênh lệch so với giá thực tế tại thời điểm bạn xem — vui lòng
-              kiểm tra lại tại trang bán trước khi quyết định mua. Điểm đáng tiền và các
-              chỉ số hiệu năng là đánh giá tổng hợp mang tính tham khảo.
+              Nền tảng so sánh giá laptop minh bạch — đối chiếu giá, thông số và điểm
+              đáng tiền từ nhiều nhà bán lẻ tại Việt Nam để bạn chọn đúng máy trong ngân
+              sách. Giá cập nhật định kỳ và có thể thay đổi theo thời điểm, vui lòng kiểm
+              tra lại tại cửa hàng trước khi mua.
             </p>
           </div>
           <nav className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate-500">
