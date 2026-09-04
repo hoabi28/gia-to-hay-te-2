@@ -2,7 +2,9 @@ import type { MetadataRoute } from "next";
 import { getAllLaptops } from "@/lib/laptopRepo";
 import { SITE_URL } from "@/lib/site";
 
-export const revalidate = 3600;
+// sitemap.ts không phản hồi revalidatePath("/sitemap.xml") một cách đáng tin cậy trên
+// Vercel — buộc render động để danh sách laptop trong sitemap luôn khớp dữ liệu hiện tại.
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const laptops = await getAllLaptops();
