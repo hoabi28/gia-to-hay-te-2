@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 import { getAllLaptops } from "@/lib/laptopRepo";
 import { CompareClient } from "@/components/compare/CompareClient";
 
+// Trang tĩnh mặc định bị Vercel cache dai dẳng ở tầng CDN kể cả sau khi deploy lại —
+// buộc render động để luôn khớp dữ liệu DB hiện tại.
+export const dynamic = "force-dynamic";
+
 const title = "So sánh laptop";
 const description =
   "So sánh trực quan hai laptop theo giá, hiệu năng lập trình/gaming/thiết kế/dựng video, màn hình, pin, độ ồn & nhiệt độ, bảo hành và điểm đáng tiền. Kết luận nên chọn máy nào tự động theo dữ liệu.";

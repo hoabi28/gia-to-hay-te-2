@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { getAllLaptops } from "@/lib/laptopRepo";
 
+export const dynamic = "force-dynamic";
+
 /** Dùng cho các client component không nằm dưới 1 server page có thể fetch trước
  * (vd CompareBar hiển thị ở mọi trang qua layout gốc). Hỗ trợ ?ids=a,b để lọc bớt. */
 export async function GET(request: Request) {

@@ -8,6 +8,7 @@ import { getLogoDataUri } from "@/lib/logoAsset";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+export const dynamic = "force-dynamic";
 
 const CATEGORY_COLOR: Record<string, string> = {
   "van-phong": "#4b5563",

@@ -4,6 +4,10 @@ import { getAllLaptops } from "@/lib/laptopRepo";
 import { LaptopListClient } from "@/components/list/LaptopListClient";
 import { LoadingGrid } from "@/components/ui/States";
 
+// Trang tĩnh mặc định bị Vercel cache dai dẳng ở tầng CDN kể cả sau khi deploy lại —
+// buộc render động để luôn khớp dữ liệu DB hiện tại.
+export const dynamic = "force-dynamic";
+
 const title = "Tìm laptop";
 const description =
   "Tìm và lọc laptop theo ngân sách, hãng, CPU, RAM, GPU, mục đích sử dụng và giá tốt. So sánh nhanh hàng loạt laptop văn phòng, sinh viên, lập trình, gaming, thiết kế và MacBook.";

@@ -24,10 +24,10 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-// Dữ liệu có thể đổi bất kỳ lúc nào qua trang admin — không prerender toàn bộ lúc build,
-// dùng ISR (revalidate định kỳ) làm lưới an toàn, kết hợp revalidatePath() từ admin để
-// trang cập nhật ngay sau khi lưu.
-export const revalidate = 3600;
+// Dữ liệu có thể đổi bất kỳ lúc nào qua trang admin hoặc thao tác trực tiếp trên DB —
+// ISR/revalidatePath từng bị Vercel cache ở tầng CDN không chịu làm mới đúng lúc, nên
+// buộc render động để trang luôn khớp dữ liệu hiện tại trong DB.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;

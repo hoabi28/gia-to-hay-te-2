@@ -6,6 +6,10 @@ import { SearchBar } from "@/components/ui/SearchBar";
 import { ProductCard } from "@/components/product/ProductCard";
 import { USE_CASE_LABEL, type UseCase } from "@/types/laptop";
 
+// Trang tĩnh mặc định bị Vercel cache dai dẳng ở tầng CDN kể cả sau khi deploy lại —
+// buộc render động để luôn khớp dữ liệu DB hiện tại.
+export const dynamic = "force-dynamic";
+
 const QUICK_NEEDS: UseCase[] = [
   "lap-trinh",
   "van-phong",
